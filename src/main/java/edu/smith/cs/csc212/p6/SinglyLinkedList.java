@@ -21,6 +21,7 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public T removeBack() {
+
 		throw new P6NotImplemented();
 	}
 
@@ -36,26 +37,40 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public void addBack(T item) {
-		throw new P6NotImplemented();
+		// If there's nothing in the list, add the item to the front.
+		if (isEmpty()) {
+			start = new Node<T>(item, null);
+		} else {
+			// Traverse the list
+			Node<T> last = start; // TODO am I assigning last to be start twice if my size is 1?
+			for (Node<T> current = start; current.next != null; current = current.next) {
+				current = last;
+			}
+
+		}
 	}
 
 	@Override
 	public void addIndex(T item, int index) {
+		checkNotEmpty();
 		throw new P6NotImplemented();
 	}
 
 	@Override
 	public T getFront() {
+		checkNotEmpty();
 		return start.value;
 	}
 
 	@Override
 	public T getBack() {
+		checkNotEmpty();
 		throw new P6NotImplemented();
 	}
 
 	@Override
-	public T getIndex(int index) {
+	public T getIndex(int index) { // he means get the item at that index
+		checkNotEmpty();
 		throw new P6NotImplemented();
 	}
 
@@ -70,7 +85,11 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public boolean isEmpty() {
-		throw new P6NotImplemented();
+		if (start == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -83,8 +102,7 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 	}
 
 	/**
-	 * The node on any linked list should not be exposed. Static means we don't need
-	 * a "this" of SinglyLinkedList to make a node.
+	 * The node on any linked list should not be exposed. Static means we don't need a "this" of SinglyLinkedList to make a node.
 	 * 
 	 * @param <T> the type of the values stored.
 	 */
@@ -110,9 +128,8 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 	}
 
 	/**
-	 * I'm providing this class so that SinglyLinkedList can be used in a for loop
-	 * for {@linkplain ChunkyLinkedList}. This Iterator type is what java uses for
-	 * {@code for (T x : list) { }} lops.
+	 * I'm providing this class so that SinglyLinkedList can be used in a for loop for {@linkplain ChunkyLinkedList}. This
+	 * Iterator type is what java uses for {@code for (T x : list) { }} loops.
 	 * 
 	 * @author jfoley
 	 *
@@ -126,6 +143,7 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 		/**
 		 * This constructor details where to start, given a list.
+		 * 
 		 * @param list - the SinglyLinkedList to iterate or loop over.
 		 */
 		public Iter(SinglyLinkedList<T> list) {
@@ -144,9 +162,10 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 			return found;
 		}
 	}
-	
+
 	/**
 	 * Implement iterator() so that {@code SinglyLinkedList} can be used in a for loop.
+	 * 
 	 * @return an object that understands "next()" and "hasNext()".
 	 */
 	public Iterator<T> iterator() {

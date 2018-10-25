@@ -7,34 +7,34 @@ import edu.smith.cs.csc212.p6.errors.RanOutOfSpaceError;
 
 import org.junit.Assert;
 
-public class GrowableListTest {
+public class DoublyLinkedListTest {
 	@Test
 	public void testEmpty() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		Assert.assertEquals(0, data.size());
 	}
 
 	@Test(expected = EmptyListError.class)
 	public void testRemoveFrontCrash() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.removeFront();
 	}
 
 	@Test(expected = EmptyListError.class)
 	public void testRemoveBackCrash() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.removeBack();
 	}
 
 	@Test(expected = EmptyListError.class)
 	public void testRemoveIndexCrash() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.removeIndex(3);
 	}
 
 	@Test
 	public void testAddToFront() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.addFront("1");
 		Assert.assertEquals(1, data.size());
 		Assert.assertEquals("1", data.getIndex(0));
@@ -56,7 +56,7 @@ public class GrowableListTest {
 
 	@Test
 	public void testAddToBack() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.addBack("1");
 		Assert.assertEquals(1, data.size());
 		Assert.assertEquals("1", data.getIndex(0));
@@ -82,7 +82,7 @@ public class GrowableListTest {
 	 * @return
 	 */
 	public P6List<String> makeFullList() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.addBack("a");
 		data.addBack("b");
 		data.addBack("c");

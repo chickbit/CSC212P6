@@ -2,6 +2,7 @@ package edu.smith.cs.csc212.p6;
 
 import java.util.Iterator;
 
+import edu.smith.cs.csc212.p6.errors.BadIndexError;
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.P6NotImplemented;
 
@@ -21,12 +22,25 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public T removeBack() {
-
-		throw new P6NotImplemented();
+		// if list is empty throw error
+		checkNotEmpty();
+		// if list is one, run removefront
+		if (this.size() == 1) {
+			return (removeFront());
+		} else {
+			Node<T> secondLast = start;
+			for (Node<T> current = start; current.next != null; current = current.next) {
+				secondLast = current;
+			}
+			T val = secondLast.next.value;
+			secondLast.next = null;
+			return val;
+		}
 	}
 
 	@Override
 	public T removeIndex(int index) {
+		checkNotEmpty();
 		throw new P6NotImplemented();
 	}
 
@@ -35,25 +49,46 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 		this.start = new Node<T>(item, start);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addBack(T item) {
 		// If there's nothing in the list, add the item to the front.
 		if (isEmpty()) {
-			start = new Node<T>(item, null);
+			addFront(item);
 		} else {
 			// Traverse the list
 			Node<T> last = start; // TODO am I assigning last to be start twice if my size is 1?
-			for (Node<T> current = start; current.next != null; current = current.next) {
+			for (Node<T> current = start; current == null; current = current.next) {
 				current = last;
 			}
-
+			// TODO fix the unchecked thing here. make something so that guessing if an item is a node stays in one place.
+			last.next = new Node(item, null);
 		}
 	}
 
 	@Override
 	public void addIndex(T item, int index) {
-		checkNotEmpty();
-		throw new P6NotImplemented();
+		// if index is 0, call add front
+		if (index == 0) {
+			this.addFront(item);
+		} else {
+			// traverse the list
+			int i = 0;
+			for (Node<T> current = start; current.next != null; current = current.next) {
+				// if we come to the end of the list
+				if (current.next == null) {
+					// and index is one more than i, add to back
+					if (index == i + 1) {
+						this.addBack(item);
+					}
+					// and index is
+				}
+
+				// otherwise have them make friends.
+				i++;
+			}
+
+		}
 	}
 
 	@Override
@@ -65,19 +100,33 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 	@Override
 	public T getBack() {
 		checkNotEmpty();
-		throw new P6NotImplemented();
+		Node<T> last = this.start;
+		for (Node<T> current = start; current.next != null; current = current.next) {
+			last = current;
+		}
+		return last.value;
 	}
 
 	@Override
 	public T getIndex(int index) { // he means get the item at that index
 		checkNotEmpty();
-		throw new P6NotImplemented();
+		int i = 0;
+		T val = null;
+		for (Node<T> current = start; current != null; current = current.next) {
+			if (i == index) {
+				val = current.value;
+			}
+			i++;
+		}
+		return val;
 	}
 
 	@Override
 	public int size() {
+		System.out.println("SIZE CALLED");
 		int count = 0;
 		for (Node<T> n = this.start; n != null; n = n.next) {
+			System.out.println(count);
 			count++;
 		}
 		return count;

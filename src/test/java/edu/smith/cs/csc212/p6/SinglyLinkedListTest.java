@@ -83,10 +83,10 @@ public class SinglyLinkedListTest {
 	 */
 	public P6List<String> makeFullList() {
 		P6List<String> data = new SinglyLinkedList<String>();
-		data.addBack("a");
-		data.addBack("b");
-		data.addBack("c");
-		data.addBack("d");
+		data.addFront("a");
+		data.addFront("b");
+		data.addFront("c");
+		data.addFront("d");
 		return data;
 	}
 

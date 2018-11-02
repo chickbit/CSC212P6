@@ -90,21 +90,6 @@ public class DoublyLinkedListTest {
 		return data;
 	}
 
-	@Test(expected = RanOutOfSpaceError.class)
-	public void testAddBackFull() {
-		makeFullList().addBack("no space");
-	}
-
-	@Test(expected = RanOutOfSpaceError.class)
-	public void testAddFrontFull() {
-		makeFullList().addFront("no space");
-	}
-
-	@Test(expected = RanOutOfSpaceError.class)
-	public void testAddIndexFull() {
-		makeFullList().addIndex("no space", 2);
-	}
-
 	@Test
 	public void testRemoveFront() {
 		P6List<String> data = makeFullList();
@@ -145,5 +130,13 @@ public class DoublyLinkedListTest {
 		Assert.assertEquals(1, data.size());
 		Assert.assertEquals("a", data.removeIndex(0));
 		Assert.assertEquals(0, data.size());
+	}
+
+	@Test
+	public void testAddIndex() {
+		P6List<String> data = makeFullList();
+		Assert.assertEquals(4, data.size());
+		data.addIndex("crab", 0);
+		Assert.assertEquals("crab", data.getFront());
 	}
 }
